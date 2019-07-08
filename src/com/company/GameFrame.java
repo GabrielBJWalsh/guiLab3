@@ -24,13 +24,16 @@ class GameFrame extends JFrame {
 
 
     GameFrame() {
-        Icon selected;
-        setLayout(new GridLayout());
-
+        GridLayout layout = new GridLayout();
+        layout.setColumns(2);
+        layout.setRows(2);
+        setLayout(layout);
+        final String[] selected = {null};
         ActionListener listener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-
+//                if (selected[0] ==null){
+//                    selected[0] = e.getActionCommand();
+//                };
                 System.out.println("Button selected: " + e.getActionCommand());
 
                 // crate SelectCheckVarable then if not null
@@ -40,50 +43,32 @@ class GameFrame extends JFrame {
         ArrayList<JToggleButton> bList = new ArrayList<>();
         ArrayList<JToggleButton> bList2 = new ArrayList<>();
 
-        Icon icon0 = new ImageIcon(getClass().getResource("images\\cat.png"));
-        Icon icon1 = new ImageIcon(getClass().getResource("images\\dog.png"));
-        Icon icon2 = new ImageIcon(getClass().getResource("images\\lizard.png"));
-        Icon icon3 = new ImageIcon(getClass().getResource("images\\bird.png"));
-        Icon icon4 = new ImageIcon(getClass().getResource("images\\hamster.png"));
-        Icon icon5 = new ImageIcon(getClass().getResource("images\\turtle.png"));
+        buttonSetUp(pic0, "cat.png", bList);
+        buttonSetUp(pic1, "dog.png", bList);
+        buttonSetUp(pic2, "lizard.png", bList);
+        buttonSetUp(pic3, "bird.png", bList);
+        buttonSetUp(pic4, "hamster.png", bList);
+        buttonSetUp(pic5, "turtle.png", bList);
+        buttonSetUp(pic0, "cat.png", bList2);
+        buttonSetUp(pic1, "dog.png", bList2);
+        buttonSetUp(pic2, "lizard.png", bList2);
+        buttonSetUp(pic3, "bird.png", bList2);
+        buttonSetUp(pic4, "hamster.png", bList2);
+        buttonSetUp(pic5, "turtle.png", bList2);
 
-        bList.add(pic0 = new JToggleButton(icon0));
-        bList.add(pic1 = new JToggleButton(icon1));
-        bList.add(pic2 = new JToggleButton(icon2));
-        bList.add(pic3 = new JToggleButton(icon3));
-        bList.add(pic4 = new JToggleButton(icon4));
-        bList.add(pic5 = new JToggleButton(icon5));
-
-        bList2.add(pic0_2 = new JToggleButton(icon0));
-        bList2.add(pic1_2 = new JToggleButton(icon1));
-        bList2.add(pic2_2 = new JToggleButton(icon2));
-        bList2.add(pic3_2 = new JToggleButton(icon3));
-        bList2.add(pic4_2 = new JToggleButton(icon4));
-        bList2.add(pic5_2 = new JToggleButton(icon5));
-
-
-        add(pic0);
-        add(pic1);
-        add(pic3);
-        add(pic0_2);
+        add(bList.get(0));
+        add(bList.get(4));
+        add(bList.get(5));
+        add(bList2.get(5));
         //
         //Buttonlistener  listener  = new Buttonlistener();
 
-        pic0.addActionListener(listener);
-        pic1.addActionListener(listener);
-        pic2.addActionListener(listener);
-        pic3.addActionListener(listener);
-        pic4.addActionListener(listener);
-        pic5.addActionListener(listener);
-
-        pic0_2.addActionListener(listener);
-        pic1_2.addActionListener(listener);
-        pic2_2.addActionListener(listener);
-        pic3_2.addActionListener(listener);
-        pic4_2.addActionListener(listener);
-        pic5_2.addActionListener(listener);
+        for (int i =0; i>5; i++){
+            bList.get(i).addActionListener(listener);
+            bList.get(i).setActionCommand("i used to work");
+            bList2.get(i).addActionListener(listener);
+        }
         //JToggleButton listner
-
 
 
         Collections.shuffle(bList);
@@ -92,9 +77,15 @@ class GameFrame extends JFrame {
 //    }
 
 
+    }
 
-        }
+    private void buttonSetUp(JToggleButton button, String s, ArrayList<JToggleButton> al) {
+        Icon i = new ImageIcon(getClass().getResource(("images\\" + s)));
+        al.add(button = new JToggleButton(i));
+       // button.setActionCommand(s);
+
 
 
     }
 
+}
