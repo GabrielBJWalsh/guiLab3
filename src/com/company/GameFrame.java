@@ -10,13 +10,13 @@ import java.util.Iterator;
 import java.util.Random;
 
 class GameFrame extends JFrame {
-    private JToggleButton pic0;
-    private JToggleButton pic1;
-    private JToggleButton pic2;
-    private JToggleButton pic3;
-    private JToggleButton pic4;
-    private JToggleButton pic5;
+
     private Random randy = new Random();
+
+    private int rand;
+    private int dnar;
+    private int dinner;
+    private ArrayList<JToggleButton> onFrame;
 
 
     GameFrame() {
@@ -29,24 +29,35 @@ class GameFrame extends JFrame {
         ArrayList<JToggleButton> bList = new ArrayList<>();
         ArrayList<JToggleButton> bList2 = new ArrayList<>();
 
-        buttonSetUp(pic0, pic0, "cat.png", bList, bList2);
-        buttonSetUp(pic1, pic1, "dog.png", bList, bList2);
-        buttonSetUp(pic2, pic2, "lizard.png", bList, bList2);
-        buttonSetUp(pic3, pic3, "bird.png", bList, bList2);
-        buttonSetUp(pic4, pic4, "hamster.png", bList, bList2);
-        buttonSetUp(pic5, pic5, "turtle.png", bList, bList2);
+        buttonSetUp("cat.png", bList, bList2);
+        buttonSetUp("dog.png", bList, bList2);
+        buttonSetUp("lizard.png", bList, bList2);
+        buttonSetUp("bird.png", bList, bList2);
+        buttonSetUp("hamster.png", bList, bList2);
+        buttonSetUp("turtle.png", bList, bList2);
 
         //Collections.shuffle(bList);
         //Collections.shuffle(bList2);
+        rand = randy.nextInt(6);
+        dinner = randy.nextInt(6);
+        dnar = randy.nextInt(6);
+        onFrame = new ArrayList<>();
+        add(bList.get(rand));
+        onFrame.add(bList.get(rand));
 
-        add(bList.get(0));
-        add(bList2.get(0));
-        add(bList.get(1));
-        add(bList2.get(1));
-        pack();
+        add(bList2.get(rand));
+        onFrame.add(bList2.get(rand));
+
+        add(bList.get(dinner);
+        onFrame.add(bList.get(rand));
+
+        add(bList2.get(dnar));
+        onFrame.add(bList.get(rand));
+        //pack();
 
         ActionListener listener = new ActionListener() {
             Object flag;
+
 
             public void actionPerformed(ActionEvent e) {
                 if (selected[0] == null) {
@@ -54,18 +65,20 @@ class GameFrame extends JFrame {
                     flag = e.getSource();
 
                     System.out.println(e.getActionCommand());
+                } else if (e.getSource() == flag) {
+                    flag = null;
+                    selected[0] = null;
                 } else if (e.getActionCommand().equals(selected[0])) {
                     selected[0] = null;
                     System.out.println("match");
                     remove((Component) e.getSource());
                     remove((Component) flag);
                     //repaint();4
-
-                    add(bList.get(randy.nextInt(5)));
-                    add(bList2.get(randy.nextInt(5)));
+                    rand = randy.nextInt(6);
+                    add(bList.get(rand));
+                    add(bList2.get(rand));
                     pack();
 
-                    repaint();
                     flag = null;
 
                 } else selected[0] = null;
@@ -82,17 +95,19 @@ class GameFrame extends JFrame {
         }
 
     }
-    private ImageIcon resizeImage(String imagePath){
-        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-        Image scaledIcon = icon.getImage().getScaledInstance(225,300, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledIcon);}
 
-    private void buttonSetUp(JToggleButton button,
-                             JToggleButton button2,
-                             String s,
+    private ImageIcon resizeImage(String imagePath) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
+        Image scaledIcon = icon.getImage().getScaledInstance(225, 300, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledIcon);
+    }
+
+    private void buttonSetUp(String s,
                              ArrayList<JToggleButton> al,
                              ArrayList<JToggleButton> al2) {
-        Icon i = resizeImage("images\\"+s);
+        JToggleButton button;
+        JToggleButton button2;
+        Icon i = resizeImage("images\\" + s);
         al.add(button = new JToggleButton(i));
         al2.add(button2 = new JToggleButton(i));
         button2.setActionCommand(s);
