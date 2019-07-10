@@ -5,59 +5,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.Random;
 
 class GameFrame extends JFrame {
 
     private Random randy = new Random();
-
-    private int rand;
-    private int dnar;
-    private int dinner;
-    private ArrayList<JToggleButton> onFrame;
-
+    private ArrayList<JToggleButton> bList = new ArrayList<>();
+    private ArrayList<JToggleButton> bList2 = new ArrayList<>();
+    private boolean oneMatch = false;
+    private ActionListener listener;
 
     GameFrame() {
-        GridLayout layout = new GridLayout();
+                GridLayout layout = new GridLayout();
         layout.setColumns(2);
         layout.setRows(2);
         setLayout(layout);
 
         final String[] selected = {null};
-        ArrayList<JToggleButton> bList = new ArrayList<>();
-        ArrayList<JToggleButton> bList2 = new ArrayList<>();
 
-        buttonSetUp("cat.png", bList, bList2);
-        buttonSetUp("dog.png", bList, bList2);
         buttonSetUp("lizard.png", bList, bList2);
         buttonSetUp("bird.png", bList, bList2);
-        buttonSetUp("hamster.png", bList, bList2);
-        buttonSetUp("turtle.png", bList, bList2);
 
-        //Collections.shuffle(bList);
-        //Collections.shuffle(bList2);
-        rand = randy.nextInt(6);
-        dinner = randy.nextInt(6);
-        dnar = randy.nextInt(6);
-        onFrame = new ArrayList<>();
-        add(bList.get(rand));
-        onFrame.add(bList.get(rand));
+        boredsetUp();
 
-        add(bList2.get(rand));
-        onFrame.add(bList2.get(rand));
-
-        add(bList.get(dinner);
-        onFrame.add(bList.get(rand));
-
-        add(bList2.get(dnar));
-        onFrame.add(bList.get(rand));
-        //pack();
-
-        ActionListener listener = new ActionListener() {
+        listener = new ActionListener() {
             Object flag;
-
 
             public void actionPerformed(ActionEvent e) {
                 if (selected[0] == null) {
@@ -73,11 +45,17 @@ class GameFrame extends JFrame {
                     System.out.println("match");
                     remove((Component) e.getSource());
                     remove((Component) flag);
-                    //repaint();4
-                    rand = randy.nextInt(6);
-                    add(bList.get(rand));
-                    add(bList2.get(rand));
-                    pack();
+                    repaint();
+                    if (oneMatch){
+                        JOptionPane.showMessageDialog(null,"ya did it");
+                        boredsetUp();
+
+                        oneMatch ^=true;
+                    }else oneMatch ^=true;
+
+
+
+
 
                     flag = null;
 
@@ -88,8 +66,7 @@ class GameFrame extends JFrame {
             }
         };
 
-
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < bList.size(); i++) {
             bList.get(i).addActionListener(listener);
             bList2.get(i).addActionListener(listener);
         }
@@ -114,6 +91,20 @@ class GameFrame extends JFrame {
         button.setActionCommand(s);
 
 
+    }
+    private void boredsetUp(){
+        int rand = randy.nextInt(2);
+        int dinner;
+        do {
+            dinner = randy.nextInt(2);
+        }while (rand == dinner);
+        add(bList.get(rand));
+        add(bList2.get(rand));
+
+        add(bList.get(dinner));
+        add(bList2.get(dinner));
+        repaint();
+        pack();
     }
 
 }
