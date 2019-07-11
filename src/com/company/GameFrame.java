@@ -7,12 +7,20 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * game frame class
+ * used to create concentration game
+ */
+
 class GameFrame extends JFrame {
 
     private ArrayList<JToggleButton> bList = new ArrayList<>();
     private boolean oneMatch = false;
     private Object flag;
 
+    /**
+     * creates the games its self
+     */
     GameFrame() {
 
         final String[] selected = {null};
@@ -28,7 +36,10 @@ class GameFrame extends JFrame {
 
 
         ActionListener listener = new ActionListener() {
-
+            /**
+             * action listener takes in the action of a button stores it compaires it and rebuilds the frame
+             * @param e
+             */
             public void actionPerformed(ActionEvent e) {
                 if (selected[0] == null) {
                     selected[0] = e.getActionCommand();
@@ -58,12 +69,22 @@ class GameFrame extends JFrame {
         for (JToggleButton button : bList) { button.addActionListener(listener); }
     }
 
+    /**
+     * takes a Image path string and forces the image to be of a particular size
+     * @param imagePath
+     * @return ImageIcon
+     */
     private ImageIcon resizeImage(String imagePath) {
         ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
         Image scaledIcon = icon.getImage().getScaledInstance(225, 300, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledIcon);
     }
 
+    /**
+     * takes string s to create image icon that is used to create a button that is then placed the arrrayList blist
+     * @param s
+     * @param al
+     */
     private void buttonSetUp(String s,
                              ArrayList<JToggleButton> al) {
         for (int i = 0; i < 2; i++) {
@@ -74,6 +95,9 @@ class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * creates the game window with a random arrangement of buttons
+     */
     private void boredsetUp() {
         Collections.shuffle(bList);
         for (JToggleButton button : bList) { add(button); }
