@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 class GameFrame extends JFrame {
 
@@ -15,34 +14,30 @@ class GameFrame extends JFrame {
     private Object flag;
 
     GameFrame() {
+
+        final String[] selected = {null};
         GridLayout layout = new GridLayout();
         layout.setColumns(2);
         layout.setRows(2);
         setLayout(layout);
 
-        final String[] selected = {null};
-
-
         buttonSetUp("lizard.png", bList);
         buttonSetUp("bird.png", bList);
 
-
         boredsetUp();
 
-        ActionListener listener = new ActionListener() {
 
+        ActionListener listener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 if (selected[0] == null) {
                     selected[0] = e.getActionCommand();
                     flag = e.getSource();
-                    System.out.println(e.getActionCommand());
                 } else if (e.getSource() == flag) {
                     flag = null;
                     selected[0] = null;
                 } else if (e.getActionCommand().equals(selected[0])) {
                     selected[0] = null;
-                    System.out.println("match");
                     remove((Component) e.getSource());
                     remove((Component) flag);
                     repaint();
@@ -60,10 +55,7 @@ class GameFrame extends JFrame {
                 }
             }
         };
-        for (JToggleButton button : bList) {
-            button.addActionListener(listener);
-
-        }
+        for (JToggleButton button : bList) { button.addActionListener(listener); }
     }
 
     private ImageIcon resizeImage(String imagePath) {
@@ -84,11 +76,8 @@ class GameFrame extends JFrame {
 
     private void boredsetUp() {
         Collections.shuffle(bList);
-        for (JToggleButton button : bList) {
-            add(button);
-        }
+        for (JToggleButton button : bList) { add(button); }
         repaint();
         pack();
     }
-
 }
